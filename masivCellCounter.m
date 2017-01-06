@@ -622,7 +622,7 @@ function exportData(~, ~, obj)
         end
     end
     try
-        writeSimpleYAML(s, fullfile(p, f))
+        masiv.yaml.writeSimpleYAML(s, fullfile(p, f))
     catch err
         errordlg('YAML file could not be created', 'Cell Counter')
         rethrow(err)
@@ -633,7 +633,7 @@ function exportData(~, ~, obj)
     masivSetting('cellCounter.importExportDefault', fullfile(p, f))
     %% Read it back in to check it's OK
     try
-        s=YAML.read(fullfile(p,f));
+        s=masiv.yaml.YAML.read(fullfile(p,f));
         [m,t]=convertStructArrayToMarkerAndTypeArrays(s);
         if any(sort(m)~=sort(obj.markers))||any(sort(t)~=sort(obj.markerTypes))
             error('YAML file validation failed')
@@ -656,7 +656,7 @@ function importData(~, ~, obj)
     [f,p]=uigetfile('*.yml', 'Import Markers', masivSetting('cellCounter.importExportDefault'));
     
     try
-        s=YAML.read(fullfile(p, f));
+        s=masiv.yaml.YAML.read(fullfile(p, f));
     catch
         errordlg('Import error', 'Cell Counter')
         rethrow(err)
